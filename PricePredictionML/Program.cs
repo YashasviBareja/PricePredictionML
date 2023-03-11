@@ -9,8 +9,8 @@ namespace TaxiFarePrediction
     class Program
     {
         // <Snippet2>
-        static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "taxi-fare-train.csv");
-        static readonly string _testDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "taxi-fare-test.csv");
+        static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "solar-data-train.csv");
+        static readonly string _testDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "solar-data-test.csv");
         static readonly string _modelPath = Path.Combine(Environment.CurrentDirectory, "Data", "Model.zip");
         // </Snippet2>
 
@@ -42,15 +42,15 @@ namespace TaxiFarePrediction
             // </Snippet6>
 
             // <Snippet7>
-            var pipeline = mlContext.Transforms.CopyColumns(outputColumnName: "Label", inputColumnName: "FareAmount")
+            var pipeline = mlContext.Transforms.CopyColumns(outputColumnName: "Label", inputColumnName: "DCPower")
                     // </Snippet7>
                     // <Snippet8>
-                    .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "VendorIdEncoded", inputColumnName: "VendorId"))
-                    .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "RateCodeEncoded", inputColumnName: "RateCode"))
+                    //.Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "VendorIdEncoded", inputColumnName: "VendorId"))
+                    //.Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "RateCodeEncoded", inputColumnName: "RateCode"))
                     .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "PaymentTypeEncoded", inputColumnName: "PaymentType"))
                     // </Snippet8>
                     // <Snippet9>
-                    .Append(mlContext.Transforms.Concatenate("Features", "VendorIdEncoded", "RateCodeEncoded", "PassengerCount", "TripDistance", "PaymentTypeEncoded"))
+                    //.Append(mlContext.Transforms.Concatenate("Features", "AmbientTemperature", "ModuleTemperature", "Irradiation"))
                     // </Snippet9>
                     // <Snippet10>
                     .Append(mlContext.Regression.Trainers.FastTree());
@@ -79,7 +79,7 @@ namespace TaxiFarePrediction
             var predictions = model.Transform(dataView);
             // </Snippet16>
             // <Snippet17>
-            var metrics = mlContext.Regression.Evaluate(predictions, "Label", "Score");
+            var metrics = mlContext.Regression.Evaluate(predictions, "Label", "DCPower");
             // </Snippet17>
 
             Console.WriteLine();
@@ -108,13 +108,16 @@ namespace TaxiFarePrediction
             // <Snippet23>
             var taxiTripSample = new TaxiTrip()
             {
-                VendorId = "VTS",
-                RateCode = "1",
-                PassengerCount = 1,
-                TripTime = 1140,
-                TripDistance = 3.75f,
-                PaymentType = "CRD",
-                FareAmount = 0 // To predict. Actual/Observed = 15.5
+                //VendorId = "VTS",
+                //RateCode = "1",
+                //PassengerCount = 1,
+                //TripTime = 1140,
+                //TripDistance = 3.75f,
+                //PaymentType = "CRD",
+                //FareAmount = 0 // To predict. Actual/Observed = 15.5
+                AmbientTemperature = 24.08844607f,
+                ModuleTemperature = 22.2067566f,
+                Irradiation = 5.886957f
             };
             // </Snippet23>
             // <Snippet24>
@@ -122,7 +125,7 @@ namespace TaxiFarePrediction
             // </Snippet24>
             // <Snippet25>
             Console.WriteLine($"**********************************************************************");
-            Console.WriteLine($"Predicted fare: {prediction.FareAmount:0.####}, actual fare: 15.5");
+            Console.WriteLine($"Predicted fare: {prediction.DCPower:0.####}, actual fare: 15.5");
             Console.WriteLine($"**********************************************************************");
             // </Snippet25>
         }

@@ -7,32 +7,16 @@ namespace TaxiFarePrediction
     // <Snippet2>
     public class TaxiTrip
     {
-        [LoadColumn(0)]
-        public string VendorId;
-
-        [LoadColumn(1)]
-        public string RateCode;
-
-        [LoadColumn(2)]
-        public float PassengerCount;
-
-        [LoadColumn(3)]
-        public float TripTime;
-
-        [LoadColumn(4)]
-        public float TripDistance;
-
-        [LoadColumn(5)]
-        public string PaymentType;
-
-        [LoadColumn(6)]
-        public float FareAmount;
+        [LoadColumn(0)] public float AmbientTemperature { get; set; }
+        [LoadColumn(1)] public float ModuleTemperature { get; set; }
+        [LoadColumn(2)] public float Irradiation { get; set; }
+        [LoadColumn(3)] public float DCPower { get; set; }
     }
 
     public class TaxiTripFarePrediction
     {
-        [ColumnName("Score")]
-        public float FareAmount;
+        [ColumnName("DCPower")]
+        public float DCPower;
     }
     // </Snippet2>
 }

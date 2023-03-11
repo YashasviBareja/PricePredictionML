@@ -11,12 +11,15 @@ namespace TaxiFarePrediction
         // <Snippet2>
         internal static readonly TaxiTrip Trip1 = new TaxiTrip
         {
-            VendorId = "VTS",
-            RateCode = "1",
-            PassengerCount = 1,
-            TripDistance = 10.33f,
-            PaymentType = "CSH",
-            FareAmount = 0 // predict it. actual = 29.5
+            //VendorId = "VTS",
+            //RateCode = "1",
+            //PassengerCount = 1,
+            //TripDistance = 10.33f,
+            //PaymentType = "CSH",
+            //FareAmount = 0 // predict it. actual = 29.5
+            AmbientTemperature= 24.08844607f,
+            ModuleTemperature = 22.2067566f,
+            Irradiation = 5.886957f
         };
         // </Snippet2>
     }
